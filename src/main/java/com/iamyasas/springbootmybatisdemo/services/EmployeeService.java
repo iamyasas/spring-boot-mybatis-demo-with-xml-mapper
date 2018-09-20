@@ -12,9 +12,12 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeMapper mapper;
 	
-	public Employee[] getEmployees() {
-		
-		return mapper.getEmployees();
+	public Employee[] getEmployees(String name) {
+		return mapper.getEmployees(name);
+	}
+
+	public Employee getEmployee(int employeeID) {
+		return mapper.getEmployee(employeeID);
 	}
 
 }

@@ -6,6 +6,9 @@ import com.iamyasas.springbootmybatisdemo.models.Employee;
 @Mapper
 public interface EmployeeMapper {
 	
-	public Employee[] getEmployees();
+	public Employee[] getEmployees(String name);
+	
+
+	public Employee getEmployee(int employeeID);
 	
 }

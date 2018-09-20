@@ -2,10 +2,22 @@
 <!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN' 'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
 
 <mapper namespace='com.iamyasas.springbootmybatisdemo.mappers.EmployeeMapper'>
-	<select id='getEmployees' resultType="com.iamyasas.springbootmybatisdemo.models.Employee">
-		SELECT e.id, e.name, e.age, d.name as department_name
+	<select id="getEmployees" resultType="Employee">
+		SELECT e.id, e.name, e.age, e.ceg_name, d.name as department_name
 		FROM ncell.employee e
 		INNER JOIN ncell.department d
 		ON e.department_id = d.id
+		<if test="_parameter != null">
+			<bind name="pattern" value="'%' + _parameter + '%'"/>
+			WHERE e.name LIKE #{pattern}
+		</if>
+	</select>
+	
+	<select id="getEmployee" resultType="Employee">
+		SELECT e.id, e.name, e.age, e.ceg_name, d.name as department_name
+		FROM ncell.employee e
+		INNER JOIN ncell.department d
+		ON e.department_id = d.id
+		WHERE e.id = #{employeeID}
 	</select>
 </mapper>
