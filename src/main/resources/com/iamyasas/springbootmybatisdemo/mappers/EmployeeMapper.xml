@@ -7,8 +7,8 @@
 		FROM ncell.employee e
 		INNER JOIN ncell.department d
 		ON e.department_id = d.id
-		<if test="_parameter != null">
-			<bind name="pattern" value="'%' + _parameter + '%'"/>
+		<if test="name != null">
+			<bind name="pattern" value="'%' + name + '%'"/>
 			WHERE e.name LIKE #{pattern}
 		</if>
 	</select>
