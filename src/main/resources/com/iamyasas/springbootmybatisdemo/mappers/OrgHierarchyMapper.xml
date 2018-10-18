@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC '-//mybatis.org//DTD Mapper 3.0//EN' 'http://mybatis.org/dtd/mybatis-3-mapper.dtd'>
+
+<mapper namespace='com.iamyasas.springbootmybatisdemo.mappers.OrgHierarchyMapper'>
+	<select id="getHeadUnit" resultMap="HeadUnitResult">
+		select org.id, org.name, u.first_name as head_employee 
+		from org_unit org
+		inner join user u
+		on org.led_by = u.id
+		where org.id = #{orgID}
+	</select>
+	<select id="getChildUnits" resultMap="HeadUnitResult">
+		select org.id, org.name, u.first_name as head_employee 
+		from org_unit org
+		inner join user u
+		on org.led_by = u.id
+		where org.parent = #{orgID} and org.id != org.parent
+	</select>
+	<select id="getLeafUnits" resultType="HeadEmployee">
+		select u.first_name as name
+		from user u
+		inner join org_unit org
+		on u.org_unit = org.id
+		where org.id = #{orgID} and org.led_by != u.id
+	</select>
+	
+	<resultMap id="HeadUnitResult" type="OrganizationUnit">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <collection property="head" resultMap="HeadEmployeeResult" />
+    </resultMap>
+    
+    <resultMap id="HeadEmployeeResult" type="HeadEmployee">
+        <result column="head_employee" property="name" />
+    </resultMap>
+	
+</mapper>
