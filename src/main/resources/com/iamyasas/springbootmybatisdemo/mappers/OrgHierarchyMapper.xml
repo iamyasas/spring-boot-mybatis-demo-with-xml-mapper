@@ -3,14 +3,14 @@
 
 <mapper namespace='com.iamyasas.springbootmybatisdemo.mappers.OrgHierarchyMapper'>
 	<select id="getHeadUnit" resultMap="HeadUnitResult">
-		select org.id, org.name, u.first_name as head_employee 
+		select org.id, org.name, org.parent, u.first_name as head_employee
 		from org_unit org
 		inner join user u
 		on org.led_by = u.id
 		where org.id = #{orgID}
 	</select>
 	<select id="getChildUnits" resultMap="HeadUnitResult">
-		select org.id, org.name, u.first_name as head_employee 
+		select org.id, org.name, org.parent, u.first_name as head_employee 
 		from org_unit org
 		inner join user u
 		on org.led_by = u.id
@@ -27,6 +27,7 @@
 	<resultMap id="HeadUnitResult" type="OrganizationUnit">
         <id column="id" property="id" />
         <result column="name" property="name" />
+        <result column="parent" property="parent" />
         <collection property="head" resultMap="HeadEmployeeResult" />
     </resultMap>
     
